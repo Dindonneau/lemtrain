@@ -5,3 +5,6 @@ _build
 */build-assets
 */build-chunks
 .rsdoctor
+
+# TypeScript incremental build cache
+*.tsbuildinfo
