@@ -1,5 +1,9 @@
-import { TaskType } from "../api/TasksCollection"
+import { TaskDocument } from "../api/TasksCollection"
 
-export const Task = ({ task }: { task: TaskType }) => {
+type TaskProps = {
+  task: TaskDocument
+}
+
+export const Task = ({ task }: TaskProps) => {
   return <li>{task.text}</li>
 }

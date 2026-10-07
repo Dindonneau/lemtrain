@@ -8,8 +8,8 @@ collections, publications, subscriptions, the async server API — before applyi
 them to real work.
 
 Even here, the app runs server-authoritative: no `autopublish`, no `insecure`.
-Every read goes through an explicit publication, and the client only ever reads
-from the collection.
+Every read goes through an explicit publication, and every write goes through
+a Meteor method — the client never touches the collection directly.
 
 ## The tutorial
 
@@ -83,7 +83,10 @@ it wants to register.
 
 A list of tasks, stored in MongoDB and rendered reactively:
 
-- `imports/api/TasksCollection.ts` — the collection, typed with `TaskType`
+- `imports/api/TasksCollection.ts` — the collection, typed with `TaskDocument`
 - `imports/api/TasksPublication.ts` — the explicit `tasks` publication
+- `imports/api/tasksMethods.ts` — the `tasks.insert` method, the only write path
 - `imports/ui/App.tsx` — subscribes with `useSubscribe` and reads with `useTracker`
+- `imports/ui/TaskForm.tsx` — the form, writing through the method
+- `imports/ui/Task.tsx` — a single task row
 - `server/main.ts` — seeds a few tasks on first startup
