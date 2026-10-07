@@ -67,9 +67,9 @@ connection only works while `meteor run` is running.
 
 ```
 client/          eagerly loaded on the client — entry point and HTML shell
-server/          eagerly loaded on the server — startup, seed, publication imports
+server/          eagerly loaded on the server — startup, seed, publication and method imports
 imports/         lazily loaded: nothing here runs until something imports it
-  api/           collections and publications
+  api/           collections, publications and methods
   ui/            React components
 tests/           Mocha test module
 ```
@@ -77,7 +77,8 @@ tests/           Mocha test module
 The split matters: Meteor loads `client/` and `server/` automatically, in a
 defined order, while `imports/` is only pulled in on demand. Shared code
 therefore lives under `imports/`, and `server/main.ts` imports the publications
-it wants to register.
+and methods it wants to register. `client/main.tsx` imports the methods too, so
+the client can run their optimistic simulation.
 
 ## What it does
 
@@ -85,7 +86,7 @@ A list of tasks, stored in MongoDB and rendered reactively:
 
 - `imports/api/TasksCollection.ts` — the collection, typed with `TaskDocument`
 - `imports/api/TasksPublication.ts` — the explicit `tasks` publication
-- `imports/api/tasksMethods.ts` — the `tasks.insert` method, the only write path
+- `imports/api/tasksMethods.ts` — the three `tasks.*` methods, the only write paths
 - `imports/ui/App.tsx` — subscribes with `useSubscribe` and reads with `useTracker`
 - `imports/ui/TaskForm.tsx` — the form, writing through the method
 - `imports/ui/Task.tsx` — a single task row
